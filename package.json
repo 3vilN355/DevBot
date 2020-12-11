@@ -1,0 +1,22 @@
+{
+  "name": "gamedevbot",
+  "version": "1.0.0",
+  "description": "Its a bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DKPenGuiN/GamedevBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DKPenGuiN/GamedevBot/issues"
+  },
+  "homepage": "https://github.com/DKPenGuiN/GamedevBot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
