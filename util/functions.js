@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const moment = require('moment')
 require('colors')
 module.exports = (client) => {
@@ -13,7 +14,16 @@ module.exports = (client) => {
     console.log(`[${moment().format('D/M/Y HH:mm:ss.SSS').bold.blue}] [${type.green}] [${title.yellow}] ${msg}`);
   };
 
+  client.errEmb = (errnum = 0, extra) => {
+    switch(errnum){
+      case 0: return new MessageEmbed({color:'RED', description: `Unknown error`})
+      case 1: return new MessageEmbed({color:'RED', description: `Not given enough arguments${extra?`\n${extra}`:''}`})
+      case 2: return new MessageEmbed({color:'RED', description: `Argument invalid${extra?`\n${extra}`:''}`})
+    }
+  }
 
+  /*
+   */
   client.randomColor = (s = 0.5, v = 0.95) => {
     var h = (Math.random() + 0.618033988749895) % 1
     var h_i = Math.floor(h * 6)
