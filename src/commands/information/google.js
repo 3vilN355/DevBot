@@ -39,6 +39,7 @@ exports.run = async (client, message, args) => {
   
   exports.conf = {
       aliases: ['g'],
+      permLevel: "Mentor"
   };
   
   exports.help = {

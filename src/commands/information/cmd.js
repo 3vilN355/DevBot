@@ -11,6 +11,7 @@ exports.run = async (client, message, args) => {
   
   exports.conf = {
       aliases: ['c'],
+      permLevel: "User"
   };
   
   exports.help = {

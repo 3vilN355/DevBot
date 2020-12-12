@@ -21,6 +21,28 @@ module.exports = (client) => {
       case 2: return new MessageEmbed({color:'RED', description: `Argument invalid${extra?`\n${extra}`:''}`})
     }
   }
+  
+  client.permlevel = (message, member) => {
+    let permlvl = 0;
+
+    if (client.appInfo && message) message.client.appInfo = client.appInfo
+    else if (client.appInfo && member) member.client.appInfo = client.appInfo
+    else return -1;
+
+    if (member) member.settings = client.settings.get(member.guild.id)
+
+    const permOrder = client.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
+
+    while (permOrder.length) {
+      const currentLevel = permOrder.shift();
+      if ((message || member).guild && currentLevel.guildOnly) continue;
+      if (currentLevel.check(message, member)) {
+        permlvl = currentLevel.level;
+        break;
+      }
+    }
+    return permlvl;
+  };
 
   /*
    */

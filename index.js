@@ -18,6 +18,8 @@ client.aliases = new Discord.Collection()
 
 require('./util/functions')(client);
 
+client.config = require('./src/config.js');
+
 (async () => {
     client.settings.set("default", (await Settings.findOneAndUpdate({_id:"default"}, {}, {upsert:true, setDefaultsOnInsert:true, new:true})).toObject())
     client.log('Load', 'Loading commands')
@@ -38,6 +40,11 @@ require('./util/functions')(client);
         const event = require(`./src/events/${evtFile.name}${evtFile.ext}`);
         client.on(evtFile.name, event.bind(null, client));
     });
+    client.levelCache = {};
+    for (let i = 0; i < client.config.permLevels.length; i++) {
+        const thisLevel = client.config.permLevels[i];
+        client.levelCache[thisLevel.name] = thisLevel.level;
+    }
     if(!process.env.token){
         client.log(`ERROR`, `A token was not found. Please read the README.md file for instructions on how to set up the .env file`)
     }

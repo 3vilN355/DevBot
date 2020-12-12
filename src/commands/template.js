@@ -11,6 +11,7 @@ exports.run = async (client, message, args) => {
 
 exports.conf = {
     aliases: ['Aliases here'],
+    permLevel: "Refer to config.js"
 };
 
 exports.help = {

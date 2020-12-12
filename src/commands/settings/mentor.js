@@ -21,6 +21,7 @@ exports.run = async (client, message, [subcmd, ...args]) => {
 
 exports.conf = {
     aliases: [],
+    permLevel: "Moderator"
 };
 
 exports.help = {

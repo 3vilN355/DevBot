@@ -17,6 +17,7 @@ exports.run = async (client, message, args) => {
 
 exports.conf = {
     aliases: ['r'],
+    permLevel: "Bot Owner"
 };
 
 exports.help = {
