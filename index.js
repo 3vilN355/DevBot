@@ -1,20 +1,25 @@
 require('dotenv').config() // Uses the '.env' file to set process.env vars 
 const Discord = require("discord.js");
+const client = new Discord.Client({ disableEveryone: true,  partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const {promisify} = require('util');
 const readdir = promisify(require('fs').readdir);
 const klaw = require('klaw')
 const path = require('path')
+const mongoose = require('mongoose');
+const Settings = require('./src/models/Settings')
+if(process.env.mongodb_connection_url){
+    mongoose.connect(process.env.mongodb_connection_url, {useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false,useCreateIndex:true});
+}
 
-const client = new Discord.Client({ disableEveryone: true,  partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 client.prefix = "!";
 client.commands = new Discord.Collection()
+client.settings = new Discord.Collection()
 client.aliases = new Discord.Collection()
 
 require('./util/functions')(client);
 
-
 (async () => {
-
+    client.settings.set("default", (await Settings.findOneAndUpdate({_id:"default"}, {}, {upsert:true, setDefaultsOnInsert:true, new:true})).toObject())
     client.log('Load', 'Loading commands')
     klaw('./src/commands').on("data", (item) => {
         let category = item.path.match(/\w+(?=[\\/][\w\-\.]+$)/)[0]
@@ -33,5 +38,8 @@ require('./util/functions')(client);
         const event = require(`./src/events/${evtFile.name}${evtFile.ext}`);
         client.on(evtFile.name, event.bind(null, client));
     });
+    if(!process.env.token){
+        client.log(`ERROR`, `A token was not found. Please read the README.md file for instructions on how to set up the .env file`)
+    }
     client.login(process.env.token);
 })()
