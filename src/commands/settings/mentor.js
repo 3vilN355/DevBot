@@ -63,9 +63,9 @@ exports.run = async (client, message, [subcmd, ...args]) => {
         // We need at least 2 args
         if(!args.length == 2) return message.channel.send(client.errEmb(1))
         // Only 1 arg cannot match the channel regex
-        if(args.filter(a => /#\d{17,19}/.test(a)).length != 1) return message.channel.send(client.errEmb(2, `You need to specify which mentor type to assign these channels to (use mentor name)`))
+        if(args.filter(a => /&\d{17,19}/.test(a)).length != 1) return message.channel.send(client.errEmb(2, `You need to specify which mentor type to assign these channels to (use @mentorrole)`))
         // Isolate the non-ID arg
-        let mN = args.find(a => /#\d{17,19}/.test(a))
+        let mN = args.find(a => /&\d{17,19}/.test(a))
         let found = message.settings.mentorRoles.find(mR => mR.roleID == mN.toLowerCase().substring(1))
         if(!found) return message.channel.send({embed:{color:'RED', description: `No mentor type matching ${mN}`}})
         // Now that all that is done, lets just replace the old mentor assigned channels with the new ones
