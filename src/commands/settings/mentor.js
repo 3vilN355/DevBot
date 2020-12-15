@@ -74,7 +74,7 @@ exports.run = async (client, message, [subcmd, ...args]) => {
         let mapped = filtered.map(v => v.match(/\d{17,19}/)[0])
         await Mentor.updateOne({_id:found._id}, {assignedChannels: [...mapped]})
         // lets just see how this works for now
-        return message.channel.send(new MessageEmbed({color: 'GREEN', description:`Successfully assigned ${args.filter(a => /\d{17,19}/.test(a)).map(v => `<@&${v.match(/\d{17,19}/)[0]}>`).join(', ')} to ${found.mentorName} mentors`}))
+        return message.channel.send(new MessageEmbed({color: 'GREEN', description:`Successfully assigned ${mapped.map(v => `<#${v.match(/\d{17,19}/)[0]}>`).join(', ')} to ${found.mentorName} mentors`}))
       }
     }catch(e){
       client.log('err', e)
