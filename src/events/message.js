@@ -13,7 +13,7 @@ module.exports = async (client, message) => {
     const level = client.permlevel(message);
     if(level == -1) return // The bot isn't actually ready yet
     message.author.permLevel = level
-    console.log(`${message.member.permLevel}: ${level}`)
+    console.log(`${message.member.displayName}: ${level}`)
     
     if(!message.content.startsWith(client.prefix)) return;
     let args = message.content.substring(client.prefix.length).split(' ')
