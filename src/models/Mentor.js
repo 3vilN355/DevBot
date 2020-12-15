@@ -5,7 +5,7 @@ const mentorSchema = Schema({
     roleID: String,
     mentorName: String,
     assignedChannels: [
-        {channelID: String}
+        String
     ]
 })
 

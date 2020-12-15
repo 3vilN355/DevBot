@@ -15,6 +15,7 @@ client.prefix = "!";
 client.commands = new Discord.Collection()
 client.settings = new Discord.Collection()
 client.aliases = new Discord.Collection()
+client.cds = new Discord.Collection()
 
 require('./util/functions')(client);
 

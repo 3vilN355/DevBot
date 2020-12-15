@@ -24,11 +24,11 @@ exports.run = async (client, message, args) => {
           const links = await serp.search({host:'google.com',qs:{q:args[0]}, num:1});
           
           if(links.length == 0) return message.channel.send(new MessageEmbed({color:`RED`, description: `No results found for \`${args[0]}\``}))
-          message.channel.send(new MessageEmbed({color:`GREEN`, description: `Here's what google came up with!\n[${links[0].title}](${links[0].url})`}))
+          message.channel.send(new MessageEmbed({color:`GREEN`, description: `Here's what google came up with for \`${args[0]}\`!\n[${links[0].title}](${links[0].url})`}))
         } else {
           const links = await serp.search({qs:{q:args.join(' ')}, num:1});
           if(links.length == 0) return message.channel.send(new MessageEmbed({color:`RED`, description: `No results found for \`${args.join(' ')}\``}))
-          message.channel.send(new MessageEmbed({color:`GREEN`, description: `[${links[0].title}](${links[0].url})`}))
+          message.channel.send(new MessageEmbed({color:`GREEN`, description: `Here's what google came up with for \`${args.join(' ')}\`!\n[${links[0].title}](${links[0].url})`}))
         }
       }catch(e){
         client.log('err', e)

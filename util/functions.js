@@ -16,7 +16,7 @@ module.exports = (client) => {
 
   client.errEmb = (errnum = 0, extra) => {
     switch(errnum){
-      case 0: return new MessageEmbed({color:'RED', description: `Unknown error`})
+      case 0: return new MessageEmbed({color:'RED', description: `${extra?`${extra}`:'Unknown error'}`})
       case 1: return new MessageEmbed({color:'RED', description: `Not given enough arguments${extra?`\n${extra}`:''}`})
       case 2: return new MessageEmbed({color:'RED', description: `Argument invalid${extra?`\n${extra}`:''}`})
     }

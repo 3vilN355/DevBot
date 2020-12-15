@@ -6,6 +6,9 @@ const settingsSchema = Schema({
     mentorRoles: [
         { type: Schema.Types.ObjectId, ref: 'Mentor' }
     ],
+    commands: [
+        { type: Schema.Types.ObjectId, ref: 'Command' }
+    ],
     roles:{
         helper: String,
         moderator: String,
