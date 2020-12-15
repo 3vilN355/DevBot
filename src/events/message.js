@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const Settings = require('../models/Settings')
 module.exports = async (client, message) => {
     if(message.author.bot) return;
+    if(!message.guild) return;
     if(message.guild && !client.settings.has((message.guild||{}).id)) {
         // We don't have the settings for this guild, find them or generate empty settings
         let s = (await Settings.findOneAndUpdate({_id:message.guild.id}, {}, {upsert:true, setDefaultsOnInsert:true, new:true}).populate('mentorRoles').populate('commands').catch(console.error)).toObject()
@@ -12,6 +13,7 @@ module.exports = async (client, message) => {
     const level = client.permlevel(message);
     if(level == -1) return // The bot isn't actually ready yet
     message.author.permLevel = level
+    console.log(`${message.member.permLevel}: ${level}`)
     
     if(!message.content.startsWith(client.prefix)) return;
     let args = message.content.substring(client.prefix.length).split(' ')

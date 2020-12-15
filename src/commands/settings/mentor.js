@@ -70,7 +70,6 @@ exports.run = async (client, message, [subcmd, ...args]) => {
         if(!found) return message.channel.send({embed:{color:'RED', description: `No mentor type matching ${mN}`}})
         // Now that all that is done, lets just replace the old mentor assigned channels with the new ones
         let filtered = args.filter(a => /[^&]\d{17,19}/.test(a) && a != mN)
-        console.log(filtered)
         let mapped = filtered.map(v => v.match(/\d{17,19}/)[0])
         await Mentor.updateOne({_id:found._id}, {assignedChannels: [...mapped]})
         // lets just see how this works for now
