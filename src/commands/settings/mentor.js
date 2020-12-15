@@ -66,10 +66,11 @@ exports.run = async (client, message, [subcmd, ...args]) => {
         if(args.filter(a => /@&\d{17,19}/.test(a)).length != 1) return message.channel.send(client.errEmb(2, `You need to specify which mentor type to assign these channels to (use @mentorrole)`))
         // Isolate the non-ID arg
         let mN = args.find(a => /@&\d{17,19}/.test(a))
-        let found = message.settings.mentorRoles.find(mR => mR.roleID == mN.toLowerCase().match(/\d{17,19}/)[0])
+        let found = message.settings.mentorRoles.find(mR => mR.roleID == mN.match(/\d{17,19}/)[0])
         if(!found) return message.channel.send({embed:{color:'RED', description: `No mentor type matching ${mN}`}})
         // Now that all that is done, lets just replace the old mentor assigned channels with the new ones
-        let filtered = args.filter(a => /\d{17,19}/.test(a) && a != mN)
+        let filtered = args.filter(a => /\d{17,19}/.test(a) && a != mN.match(/\d{17,19}/)[0])
+        console.log(filtered)
         let mapped = filtered.map(v => v.match(/\d{17,19}/)[0])
         await Mentor.updateOne({_id:found._id}, {assignedChannels: [...mapped]})
         // lets just see how this works for now
