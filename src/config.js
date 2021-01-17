@@ -9,7 +9,7 @@ const config = {
       name: "Mentor",
       check: (message, member) => {
         try {
-          let log = (message?.author||member).id == '405109496143282187'
+          let log = (message.author||member).id == '405109496143282187'
           const mentorRoles = (message||member).settings.roles.mentorRoles.filter(r => (message||member).guild.roles.resolve(r.roleID));
           if(log) console.log(mentorRoles)
           if (mentorRoles){
