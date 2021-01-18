@@ -14,7 +14,6 @@ exports.run = async (client, message, args) => {
 
               let max = 1993;
               if (args.length == 2) {
-                console.log(args[1]);
                 max -= args[1].length;
               }
 
