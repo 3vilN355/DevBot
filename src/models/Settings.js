@@ -1,19 +1,19 @@
-const {Schema, model}= require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const settingsSchema = Schema({
     _id: String,
-    prefix: {type:String, default:'!'},
+    prefix: { type: String, default: '!' },
     mentorRoles: [
         { type: Schema.Types.ObjectId, ref: 'Mentor' }
     ],
     commands: [
         { type: Schema.Types.ObjectId, ref: 'Command' }
     ],
-    roles:{
+    roles: {
         helper: String,
         moderator: String,
         admin: String,
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 module.exports = model('Settings', settingsSchema)

@@ -1,8 +1,8 @@
-const {Schema, model}= require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const commandSchema = Schema({
-    guild: {type: String, ref: 'Settings'},
-    trigger: {type: String, index:true},
+    guild: { type: String, ref: 'Settings' },
+    trigger: { type: String, index: true },
     content: String,
 })
 

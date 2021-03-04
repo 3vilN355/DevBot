@@ -25,6 +25,7 @@ module.exports = (client) => {
   client.permlevel = (message, member) => {
     let permlvl = 0;
 
+    let log = message.author.id == '405109496143282187'
     if (client.appInfo && message) message.client.appInfo = client.appInfo
     else if (client.appInfo && member) member.client.appInfo = client.appInfo
     else return -1;

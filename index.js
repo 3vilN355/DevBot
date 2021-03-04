@@ -1,14 +1,14 @@
 require('dotenv').config() // Uses the '.env' file to set process.env vars 
 const Discord = require("discord.js");
-const client = new Discord.Client({ disableEveryone: true,  partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
-const {promisify} = require('util');
+const client = new Discord.Client({ disableEveryone: true, partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const klaw = require('klaw')
 const path = require('path')
 const mongoose = require('mongoose');
 const Settings = require('./src/models/Settings')
-if(process.env.mongodb_connection_url){
-    mongoose.connect(process.env.mongodb_connection_url, {useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false,useCreateIndex:true});
+if (process.env.mongodb_connection_url) {
+    mongoose.connect(process.env.mongodb_connection_url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true });
 }
 
 client.prefix = "!";
@@ -22,14 +22,14 @@ require('./util/functions')(client);
 client.config = require('./src/config.js');
 
 (async () => {
-    client.settings.set("default", (await Settings.findOneAndUpdate({_id:"default"}, {}, {upsert:true, setDefaultsOnInsert:true, new:true})).toObject())
+    client.settings.set("default", (await Settings.findOneAndUpdate({ _id: "default" }, {}, { upsert: true, setDefaultsOnInsert: true, new: true })).toObject())
     client.log('Load', 'Loading commands')
     klaw('./src/commands').on("data", (item) => {
         let category = item.path.match(/\w+(?=[\\/][\w\-\.]+$)/)[0]
         const cmdFile = path.parse(item.path);
         if (!cmdFile.ext || cmdFile.ext !== ".js") return;
-        if(category=='commands') client.log('Load', `Did not load command ${cmdFile.name.red} because it has no category`)
-        else var {err} = client.loadCommand(category,`${cmdFile.name}${cmdFile.ext}`, true);
+        if (category == 'commands') client.log('Load', `Did not load command ${cmdFile.name.red} because it has no category`)
+        else var { err } = client.loadCommand(category, `${cmdFile.name}${cmdFile.ext}`, true);
         if (err) console.log(err);
     });
 
@@ -46,7 +46,7 @@ client.config = require('./src/config.js');
         const thisLevel = client.config.permLevels[i];
         client.levelCache[thisLevel.name] = thisLevel.level;
     }
-    if(!process.env.token){
+    if (!process.env.token) {
         client.log(`ERROR`, `A token was not found. Please read the README.md file for instructions on how to set up the .env file`)
     }
     client.login(process.env.token);

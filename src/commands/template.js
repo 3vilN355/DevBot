@@ -1,8 +1,8 @@
 exports.run = async (client, message, args) => {
   return Promise.resolve().then(async () => {
-    try{
+    try {
 
-    }catch(e){
+    } catch (e) {
       client.log('err', e)
     }
   })
@@ -10,11 +10,11 @@ exports.run = async (client, message, args) => {
 
 
 exports.conf = {
-    aliases: ['Aliases here'],
-    permLevel: "Refer to config.js"
+  aliases: ['Aliases here'],
+  permLevel: "Refer to config.js"
 };
 
 exports.help = {
-    name: "template",
-    description: `Some description of the command`,
+  name: "template",
+  description: `Some description of the command`,
 };

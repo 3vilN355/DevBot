@@ -11,25 +11,25 @@ module.exports = (client) => {
         s = (await Settings.findOne({
           _id: k
         }).populate('commands').populate('mentorRoles')).toObject();
-      } catch (e) {}
+      } catch (e) { }
       if (s) {
         if (_.isEqual(client.settings.get(k), s)) return;
         // If they're not equal, first check if the difference lies in the mentorRoles
-        if(!_.isEqual(client.settings.get(k).mentorRoles, s.mentorRoles)){
+        if (!_.isEqual(client.settings.get(k).mentorRoles, s.mentorRoles)) {
           // The mentor roles are different. Mentor roles aren't changed clientside so just set the settings to the pulled ones
           client.log('Fetch', `Database.mentorRoles -> Client.mentorRoles (${k.red})`);
           client.settings.set(k, s);
         } else {
-          if(moment(client.settings.get(k).updatedAt).add(1, 'ms').isBefore(moment(s.updatedAt))){
+          if (moment(client.settings.get(k).updatedAt).add(1, 'ms').isBefore(moment(s.updatedAt))) {
             // The server updated last. Grab that shit
             client.log('Fetch', `Database -> Client (${k.red})`);
             client.settings.set(k, s);
           } else {
             // The server hasn't updated. We gotta update dat bish
-            let ourThing = {...client.settings.get(k)}
+            let ourThing = { ...client.settings.get(k) }
             delete ourThing._id
             client.log('Push', `Client -> Database (${k.red})`);
-            client.settings.set(k, (await Settings.findOneAndUpdate({_id:s._id}, ourThing, {new:true})).toObject())
+            client.settings.set(k, (await Settings.findOneAndUpdate({ _id: s._id }, ourThing, { new: true })).toObject())
           }
         }
       } else {

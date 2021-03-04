@@ -1,48 +1,56 @@
 const { MessageEmbed } = require("discord.js");
-const serp = require("serp");
+const axios = require('axios');
 
 exports.run = async (client, message, args) => {
-    return Promise.resolve().then(async () => {
-      try{
-        // Are any arguments given?
-        if(args.length == 0) return message.channel.send(client.errEmb(1))
-        if(args.length == 1){
-          // Check if it fits the message ID criteria
-          let match = args[0].match(/^\d{17,19}$/)
-          if(match){
-            // Its a link to a message. Lets find that message!
-            let msg = await message.channel.messages.fetch(match[0]).catch(e => {})
-            if(msg){
-              // We found the message!
-              const links = await serp.search({host:'google.com',qs:{q:msg.content}, num:1});
-              if(links.length == 0) return message.channel.send(new MessageEmbed({color:`RED`, description: `No results found for \`${msg.content}\``}))
-              return message.channel.send(`${msg.author}, here's a google search for \`${msg.content}\`!`, {embed: new MessageEmbed({color:`GREEN`, description: `[${links[0].title}](${links[0].url})`})})
-            }
-          }
-          // If it didn't find a message or it didn't match, just search for the arg
-          
-          const links = await serp.search({host:'google.com',qs:{q:args[0]}, num:1});
-          
-          if(links.length == 0) return message.channel.send(new MessageEmbed({color:`RED`, description: `No results found for \`${args[0]}\``}))
-          message.channel.send(new MessageEmbed({color:`GREEN`, description: `Here's what google came up with for \`${args[0]}\`!\n[${links[0].title}](${links[0].url})`}))
-        } else {
-          const links = await serp.search({qs:{q:args.join(' ')}, num:1});
-          if(links.length == 0) return message.channel.send(new MessageEmbed({color:`RED`, description: `No results found for \`${args.join(' ')}\``}))
-          message.channel.send(new MessageEmbed({color:`GREEN`, description: `Here's what google came up with for \`${args.join(' ')}\`!\n[${links[0].title}](${links[0].url})`}))
-        }
-      }catch(e){
-        client.log('err', e)
+  return Promise.resolve().then(async () => {
+    try {
+      let match = args[0].match(/^\d{17,19}$/);
+      let gKey = 'AIzaSyCb03tEOx3E9wKQ9b-avD7sgMCYTYiZwLo'
+      let csx = 'a06ff989be2a659c7'
+      let query;
+      if (!match) {
+        query = args.join(' ')
+      } else {
+        query = await message.channel.messages.fetch(match[0])
+        if (!query) return message.channel.send('Please enter your search term!')
+        else query = query.content
       }
-    })
-  };
-  
-  
-  exports.conf = {
-      aliases: ['g'],
-      permLevel: "Mentor"
-  };
-  
-  exports.help = {
-      name: "google",
-      description: `Generate a link to google!`,
-  };
+
+      if (!query) return message.channel.send('Please enter your search term!')
+
+      href = await search(query);
+      if (!href) return message.channel.send("Unknown Search.")
+
+      const embed = new MessageEmbed()
+        .setTitle(`Heres what i found for ${query}`)
+        .setDescription(href.snippet)
+        .setURL(href.link)
+        .setColor('#2eabff')
+
+      message.channel.send(embed)
+      async function search(query) {
+        const { data } = await axios.get("https://www.googleapis.com/customsearch/v1", {
+          params: {
+            key: gKey, cx: csx, safe: 'off', q: query
+          }
+        });
+
+        if (!data.items) return null;
+        return data.items[0];
+      }
+    } catch (e) {
+      client.log('err', e)
+    }
+  })
+};
+
+
+exports.conf = {
+  aliases: ['g'],
+  permLevel: "Mentor"
+};
+
+exports.help = {
+  name: "google",
+  description: `Generate a link to google!`,
+};
