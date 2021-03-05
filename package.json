@@ -19,8 +19,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "colors": "^1.4.0",
-    "discord.js": "^12.5.1",
+    "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
+    "ideone-npm": "^3.0.0",
     "klaw": "^3.0.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",

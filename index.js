@@ -1,6 +1,9 @@
 require('dotenv').config() // Uses the '.env' file to set process.env vars 
 const Discord = require("discord.js");
-const client = new Discord.Client({ disableEveryone: true, partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const client = new Discord.Client({ disableEveryone: true, partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+    intents:[
+        'DIRECT_MESSAGES', 'GUILDS', 'GUILD_INTEGRATIONS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'
+    ]});
 const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const klaw = require('klaw')
