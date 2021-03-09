@@ -4,6 +4,9 @@ const axios = require('axios');
 exports.run = async (client, message, args) => {
   return Promise.resolve().then(async () => {
     try {
+
+      if (args.length == 0) return message.channel.send(client.errEmb(1));
+
       let match = args[0].match(/^\d{17,19}$/);
       let gKey = 'AIzaSyCb03tEOx3E9wKQ9b-avD7sgMCYTYiZwLo'
       let csx = 'a06ff989be2a659c7'
@@ -12,14 +15,14 @@ exports.run = async (client, message, args) => {
         query = args.join(' ')
       } else {
         query = await message.channel.messages.fetch(match[0])
-        if (!query) return message.channel.send('Please enter your search term!')
+        if (!query) return message.channel.send(client.errEmb(2, 'Please enter your search term!'));
         else query = query.content
       }
 
-      if (!query) return message.channel.send('Please enter your search term!')
+      if (!query) return message.channel.send(client.errEmb(2, 'Please enter your search term!'));
 
       href = await search(query);
-      if (!href) return message.channel.send("Unknown Search.")
+      if (!href) return message.channel.send(client.errEmb(2, "Unknown Search."));
 
       const embed = new MessageEmbed()
         .setTitle(`Heres what i found for ${query}`)
