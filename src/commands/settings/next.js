@@ -33,7 +33,15 @@ exports.run = async (client, message, [amount]) => {
   })
 }
 
+exports.conf = {
+  aliases: [],
+  permLevel: "User"
+};
 
+exports.help = {
+  name: "next",
+  description: `Moves one or more users from a vc`,
+};
 function sample(arr, n) {
   var result = new Set(),
       filtered = [...arr]
