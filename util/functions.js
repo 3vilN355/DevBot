@@ -13,7 +13,7 @@ module.exports = (client) => {
 
     console.log(`[${moment().format('D/M/Y HH:mm:ss.SSS').bold.blue}] [${type.green}] [${title.yellow}] ${msg}`);
   };
-
+  
   client.errEmb = (errnum = 0, extra) => {
     switch(errnum){
       case 0: return new MessageEmbed({color:'RED', description: `${extra?`${extra}`:'Unknown error'}`})

@@ -8,7 +8,7 @@ const { promisify } = require('util');
 const readdir = promisify(require('fs').readdir);
 const klaw = require('klaw')
 const path = require('path')
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const Settings = require('./src/models/Settings')
 if (process.env.mongodb_connection_url) {
     mongoose.connect(process.env.mongodb_connection_url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true });
