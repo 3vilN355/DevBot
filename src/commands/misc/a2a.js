@@ -5,7 +5,7 @@ exports.run = async(client, message, args) => {
     //creating the custom embed the old fashioned way bc im lazy asf lol
     const embed = new MessageEmbed()
     .setColor("RANDOM")
-    .addField("Incorrect Formatting", "We'd prefer if you avoiding asking questions like \" I need help \", instead, just present your problem.", true)
+    .addField("Incorrect Formatting", "We'd prefer if you avoiding asking questions like \"I need help\", instead, just present your problem.", true)
     
     //any arguments?
     if (args.length == 0) return message.channel.send(client.errEmb(1));
@@ -32,9 +32,9 @@ exports.run = async(client, message, args) => {
     message.channel.send(`Hello ${msg.author}`)
     
     message.channel.send(embed)
-  }
   }else {
     return message.channel.send(client.errEmb(2, 'please provide a valid message ID!'));
+  }
   }
   }catch(e){
       client.log('err', e)
@@ -43,7 +43,7 @@ exports.run = async(client, message, args) => {
 
 exports.conf = {
     aliases: ['a2a'], 
-    permLevel: "User"
+    permLevel: "Mentor"
 }
 
 exports.help = {
