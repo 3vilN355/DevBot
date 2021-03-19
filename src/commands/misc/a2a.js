@@ -24,10 +24,7 @@ exports.run = async(client, message, args) => {
      if(!msg) return message.channel.send(client.errEmb(0, `Failed to resolve ${match} to a message.`))
     
     //deletes the located message, as we want them to reformat correctly.
-     msg.delete()
-    
-     //deletes the command message.
-    message.delete()
+    msg.delete()
     
     message.channel.send(`Hello ${msg.author}`)
     
