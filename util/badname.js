@@ -78,9 +78,7 @@ function generate_all(combinations) {
 
 function generate_recursive(combinations, index, current) {
     if (index === (combinations.length - 1)) {
-        return combinations[index].map(function (name) {
-            return current + " " + name;
-        });
+        return combinations[index].map((name) => `${current} ${name}`);
     }
     var names = [];
     for (var i = 0; i < combinations[index].length; i++) {
@@ -91,38 +89,26 @@ function generate_recursive(combinations, index, current) {
 
 function post_process(generated_names) {
     var rng = mulberry32(SEED);
-    var filtered = generated_names.filter(function (name) {
-        return !((name.length > 32) || (name.includes("Orange") && name.includes("Juice")));
-    });
-    filtered = filtered
-        .map(function (value) {
-            return ({ value: value, sort: rng() });
-        })
-        .sort(function (a, b) {
-            return a.sort - b.sort;
-        })
-        .map(function (_a) {
-            var value = _a.value;
-            return value;
-        });
-    return filtered.map(function (name) {
-        return name.trim();
-    });
+    return generated_names
+        .filter((name) => !((name.length > 32) || (name.includes("Orange") && name.includes("Juice"))))
+        .map((name) => ({ name, sort: rng() }))
+        .sort((a,b) => a.sort-b.sort)
+        .map((a) => a.name.trim());
 }
 
 class BadNamer {
     constructor(combinations) {
-        for (var i = 0; i < combinations.length; i++) {
-            console.log(combinations[i].length);
-        }
+        // for (var i = 0; i < combinations.length; i++) {
+        //     console.log(combinations[i].length);
+        // }
         this.names = post_process(generate_all(combinations));
-        console.log(this.names.length);
+        // console.log(this.names.length);
     }
 
     get(index) {
         let name_index = index % this.names.length;
         let number = Math.floor(index / this.names.length);
-        return this.names[name_index] + " #" + number
+        return this.names[name_index] + "#" + number
     };
 }
 function mulberry32(a) {
