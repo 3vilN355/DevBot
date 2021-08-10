@@ -7,7 +7,7 @@ exports.run = async (client, message, args) => {
       let e = await eval(args.join(' '))
       if (typeof (e) == 'object') e = JSON.stringify(e)
       else if (typeof (e) != 'string') e = e.toString()
-      message.channel.send(new MessageEmbed({ description: e }))
+      message.channel.send({embeds: [new MessageEmbed({ description: e })]})
     } catch (e) {
       client.log('err', e)
     }

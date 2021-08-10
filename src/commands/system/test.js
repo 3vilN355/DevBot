@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
             // Eval the code
             let analysis = scope_analysis(args.join(' '))
             console.log(analysis)
-            message.channel.send(new MessageEmbed({description: analysis.locations}))
+            message.channel.send({embeds: [new MessageEmbed({description: analysis.locations})]})
         } catch (e) {
             client.log('err', e)
         }

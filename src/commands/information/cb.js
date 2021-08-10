@@ -2,7 +2,7 @@ exports.run = async (client, message, args) => {
   return Promise.resolve().then(async () => {
     try {
       // Are any arguments given?
-      if (args.length == 0) return message.channel.send(client.errEmb(1));
+      if (args.length == 0) return message.channel.send({embeds: [client.errEmb(1)]});
 
       if (args.length == 1 || args.length == 2) {
         // Check if it fits the message ID criteria
@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
           }
 
           //make sure code block will fit under 2000 characters
-          if (msg.content.length > max) return message.channel.send(client.errEmb(2, `Message too long. Please keep it ${max} characters or fewer`));
+          if (msg.content.length > max) return message.channel.send({embeds: [client.errEmb(2, `Message too long. Please keep it ${max} characters or fewer`)]});
 
           //sends code block version
           message.channel.send(`code by ${msg.author}:`)
@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
             message.channel.send('```' + args[1] + '\n' + msg.content + '```');
 
         } else {
-          return message.channel.send(client.errEmb(2, 'please provide a valid message ID!'));
+          return message.channel.send({embeds: [client.errEmb(2, 'please provide a valid message ID!')]});
         }
       }
     } catch (e) {

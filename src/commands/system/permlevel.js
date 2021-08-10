@@ -5,11 +5,11 @@ exports.run = async (client, message, [member]) => {
     try {
       let ID = member.match(/\d{17,19}/)[0]
       member = await message.guild.members.fetch(ID)
-      message.channel.send(new MessageEmbed({ color: 'GREEN', description: client.permlevel(null, member) }))
+      message.channel.send({ embeds: [new MessageEmbed({ color: 'GREEN', description: client.permlevel(null, member) })] })
 
     } catch (e) {
       client.log('err', e)
-      message.channel.send({ embed: { color: 'RED', description: e } })
+      message.channel.send({ embeds: [{ color: 'RED', description: e }] })
     }
   })
 };

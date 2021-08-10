@@ -24,14 +24,18 @@ module.exports = async (client, message) => {
     // Uhhhhhhh..... Lets see if we have a command with that trigger
     if (message.settings.commands.filter(c => c.trigger == command).length == 1) {
       // We just send an embed with the c content
-      return message.channel.send(new MessageEmbed({ color: client.randomColor(), description: message.settings.commands.filter(c => c.trigger == command)[0].content }))
+      return message.channel.send({embeds:[new MessageEmbed({ color: client.randomColor(), description: message.settings.commands.filter(c => c.trigger == command)[0].content })]})
     }
   }
   if (!cmd) return next();
   // Check if the user's permlevel is high enough to run the command
   if (level < client.levelCache[cmd.conf.permLevel]) return next();
-  await cmd.run(client, message, args)
+  const ret = await cmd.run(client, message, args);
+  if(ret && ret.description) {
+    await message.channel.send({embeds:[ret]})
+  }
 
+  next();
   // Only called if the command pipeline was interrupted and the bot was ready to handle it
   async function next() {
     // Lets first check if the message is in one of the mentor roles' channels

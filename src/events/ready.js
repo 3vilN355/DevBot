@@ -4,8 +4,8 @@ const Settings = require('../models/Settings');
 module.exports = (client) => {
   updateStuff();
   async function updateStuff() {
-    client.appInfo = await client.fetchApplication();
-    client.settings.keyArray().forEach(async (k) => {
+    client.appInfo = await client.application.fetch();
+    for(const [k, v] of client.settings){
       let s;
       try {
         s = (await Settings.findOne({
@@ -39,7 +39,7 @@ module.exports = (client) => {
         })).save()).populate('mentorRoles').populate('commands')).toObject());
         client.log('Fetch', `Finished generating config for guild with ID:${k.red}`);
       }
-    });
+    };
   }
   setInterval(updateStuff, 3000)
 

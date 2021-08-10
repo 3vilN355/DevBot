@@ -96,7 +96,7 @@ function post_process(generated_names) {
         .map((a) => a.name.trim());
 }
 
-class BadNamer {
+module.exports = class BadNamer {
     constructor() {
         // for (var i = 0; i < combinations.length; i++) {
         //     console.log(combinations[i].length);
@@ -108,7 +108,7 @@ class BadNamer {
     get(index) {
         let name_index = index % this.names.length;
         let number = Math.floor(index / this.names.length);
-        return this.names[name_index] + "#" + number
+        return `${this.names[name_index]}${number>0?`#${number}`:''}`
     };
 }
 function mulberry32(a) {

@@ -26,7 +26,7 @@ module.exports = (client) => {
   client.permlevel = (message, member) => {
     let permlvl = 0;
 
-    let log = message.author.id == '405109496143282187'
+    // let log = message.author.id == '405109496143282187'
     if (client.appInfo && message) message.client.appInfo = client.appInfo
     else if (client.appInfo && member) member.client.appInfo = client.appInfo
     else return -1;
@@ -184,14 +184,14 @@ module.exports = (client) => {
       _id: id
     }, {
       $inc: {
-        counter: 1
+        index: 1
       }
     }, {
       new: true,
       upsert: true,
       setDefaultsOnInsert: true
     })
-    return res.counter
+    return res.index
   }
 
   client.embColor = 'ea05ec'
