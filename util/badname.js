@@ -1,3 +1,5 @@
+//Some overpowered comment magic to make my push not be rejected
+
 var SEED = 130873;
 var COMBINATIONS = [
     [
