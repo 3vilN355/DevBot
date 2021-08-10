@@ -1,5 +1,3 @@
-//This class works just fine when given the proper indices
-
 var SEED = 130873;
 var COMBINATIONS = [
     [
@@ -22,7 +20,6 @@ var COMBINATIONS = [
         "Burnt",
         "Instinctual",
         "Overpowered",
-        "Shakespearean",
         "Robotic",
         "Peaceful",
         "Controversial",
@@ -63,7 +60,7 @@ var COMBINATIONS = [
         "Stew",
         "Cake",
         "Ice Cream",
-        "Dessert",
+        "Desert",
         "Milkshake",
         "Mash",
         "Pie",
@@ -95,11 +92,11 @@ function generate_recursive(combinations, index, current) {
 function post_process(generated_names) {
     var rng = mulberry32(SEED);
     var filtered = generated_names.filter(function (name) {
-        return !(name.includes("Orange") && name.includes("Juice"));
+        return !((name.length > 32) || (name.includes("Orange") && name.includes("Juice")));
     });
     filtered = filtered
         .map(function (value) {
-            return ({value: value, sort: rng()});
+            return ({ value: value, sort: rng() });
         })
         .sort(function (a, b) {
             return a.sort - b.sort;
@@ -128,7 +125,6 @@ class BadNamer {
         return this.names[name_index] + " #" + number
     };
 }
-
 function mulberry32(a) {
     return function () {
         var t = a += 0x6D2B79F5;
