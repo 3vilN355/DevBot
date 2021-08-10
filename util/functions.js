@@ -179,7 +179,7 @@ module.exports = (client) => {
 
   const Counter = require("../models/Counter")
 
-  client.getNextCaseNum = async (id) => {
+  client.getNextCounter = async (id) => {
     let res = await Counter.findOneAndUpdate({
       _id: id
     }, {
