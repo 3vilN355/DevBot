@@ -97,11 +97,11 @@ function post_process(generated_names) {
 }
 
 class BadNamer {
-    constructor(combinations) {
+    constructor() {
         // for (var i = 0; i < combinations.length; i++) {
         //     console.log(combinations[i].length);
         // }
-        this.names = post_process(generate_all(combinations));
+        this.names = post_process(generate_all(COMBINATIONS));
         // console.log(this.names.length);
     }
 
