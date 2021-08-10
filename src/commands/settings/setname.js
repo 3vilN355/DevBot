@@ -8,6 +8,16 @@ exports.run = async (client, message, args) => {
         if (badNamer === null) {
             badNamer = new BadNamer(COMBINATIONS)
         }
-        message.member.setName(badNamer.get(client.getNextCaseNum("Counter")))
+        await message.member.setNickname(badNamer.get(client.getNextCaseNum("Counter")))
     })
 }
+
+exports.conf = {
+    aliases: [],
+    permLevel: "Helper"
+};
+
+exports.help = {
+    name: "badnamev2",
+    description: `Gives a random name`,
+};
