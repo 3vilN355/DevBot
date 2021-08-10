@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const moment = require('moment')
 require('colors')
+
 module.exports = (client) => {
   /*
       Logs to console
@@ -13,15 +14,15 @@ module.exports = (client) => {
 
     console.log(`[${moment().format('D/M/Y HH:mm:ss.SSS').bold.blue}] [${type.green}] [${title.yellow}] ${msg}`);
   };
-  
+
   client.errEmb = (errnum = 0, extra) => {
-    switch(errnum){
-      case 0: return new MessageEmbed({color:'RED', description: `${extra?`${extra}`:'Unknown error'}`})
-      case 1: return new MessageEmbed({color:'RED', description: `Not given enough arguments${extra?`\n${extra}`:''}`})
-      case 2: return new MessageEmbed({color:'RED', description: `Argument invalid${extra?`\n${extra}`:''}`})
+    switch (errnum) {
+      case 0: return new MessageEmbed({ color: 'RED', description: `${extra ? `${extra}` : 'Unknown error'}` })
+      case 1: return new MessageEmbed({ color: 'RED', description: `Not given enough arguments${extra ? `\n${extra}` : ''}` })
+      case 2: return new MessageEmbed({ color: 'RED', description: `Argument invalid${extra ? `\n${extra}` : ''}` })
     }
   }
-  
+
   client.permlevel = (message, member) => {
     let permlvl = 0;
 
@@ -117,10 +118,10 @@ module.exports = (client) => {
     let diff = [`#${start_color}`]
     for (let i = 0; i < steps - 1; i++) {
       let d = [((diff_red * p * (i + 1)) + start_red).toString(16).split('.')[0],
-        ((diff_green * p * (i + 1)) + start_green).toString(16).split('.')[0],
-        ((diff_blue * p * (i + 1)) + start_blue).toString(16).split('.')[0]
+      ((diff_green * p * (i + 1)) + start_green).toString(16).split('.')[0],
+      ((diff_blue * p * (i + 1)) + start_blue).toString(16).split('.')[0]
       ]
-      diff.push(`#${d.map(v => `${v.length > 1?`${v}`:'0'+v}`).join('')}`)
+      diff.push(`#${d.map(v => `${v.length > 1 ? `${v}` : '0' + v}`).join('')}`)
     }
 
     return diff
@@ -175,6 +176,23 @@ module.exports = (client) => {
       await callback(array[index], index, array);
     }
   };
+
+  const Counter = require("../models/Counter")
+
+  client.getNextCaseNum = async (id) => {
+    let res = await Counter.findOneAndUpdate({
+      _id: id
+    }, {
+      $inc: {
+        counter: 1
+      }
+    }, {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true
+    })
+    return res.counter
+  }
 
   client.embColor = 'ea05ec'
   // `await client.wait(1000);` to "pause" for 1 second.

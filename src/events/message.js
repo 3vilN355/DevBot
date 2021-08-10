@@ -64,12 +64,12 @@ module.exports = async (client, message) => {
           // There is no ambiguity!
           if (hasPing) {
             // This is easy. Just give a thanks to the first message.mentions.members
-            client.emit('newThank', {message, thankedMember: message.mentions.members.first()})
+            client.emit('newThank', { message, thankedMember: message.mentions.members.first() })
           } else {
             // Fetch the referenced message
             let refd = await message.channel.messages.fetch(message.reference.messageID).catch(() => { })
             if (!refd) return; // Referenced message wasn't found. It's deleted already lmao
-            client.emit('newThank', {message, thankedMember: refd.member})
+            client.emit('newThank', { message, thankedMember: refd.member })
           }
         }
 
