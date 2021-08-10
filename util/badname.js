@@ -122,7 +122,7 @@ class BadNamer {
     get(index) {
         let name_index = index % this.names.length;
         let number = Math.floor(index / this.names.length);
-        return this.names[name_index] + " #" + number
+        return this.names[name_index] + "#" + number
     };
 }
 function mulberry32(a) {
