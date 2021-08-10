@@ -177,7 +177,7 @@ module.exports = (client) => {
     }
   };
 
-  const Counter = require("../models/Counter")
+  const Counter = require("../src/models/Counter")
 
   client.getNextCounter = async (id) => {
     let res = await Counter.findOneAndUpdate({
