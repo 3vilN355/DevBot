@@ -92,7 +92,7 @@ function generate_recursive(combinations, index, current) {
 function post_process(generated_names) {
     var rng = mulberry32(SEED);
     var filtered = generated_names.filter(function (name) {
-        return !((name.length > 32) || (name.includes("Orange") && name.includes("Juice")));
+        return !((name.length > 27) || (name.includes("Orange") && name.includes("Juice")));
     });
     filtered = filtered
         .map(function (value) {
