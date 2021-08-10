@@ -63,7 +63,7 @@ var COMBINATIONS = [
         "Stew",
         "Cake",
         "Ice Cream",
-        "Desert",
+        "Dessert",
         "Milkshake",
         "Mash",
         "Pie",
